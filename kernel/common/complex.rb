@@ -186,6 +186,19 @@ class Complex < Numeric
   alias_method :quo, :divide
 
   #
+  # Divides each part of a <tt>Complex</tt> number as it is a float.
+  #
+  def fdiv(other)
+    if other.kind_of?(Complex)
+      # TODO
+    elsif other.kind_of?(Numeric) && other.real?
+      Complex(real.fdiv(other), imag.fdiv(other))
+    else
+      redo_coerced(:fdiv, other)
+    end
+  end
+
+  #
   # Raise this complex number to the given (real or complex) power.
   #
   def ** (other)
@@ -379,16 +392,6 @@ class Complex < Numeric
   #
   def inspect
     "(#{to_s})"
-  end
-
-  #
-  # Divides each part of a <tt>Complex</tt> number as it is a float.
-  #
-  def fdiv(other)
-    raise TypeError, "#{other.class} can't be coerced into Complex" unless other.is_a?(Numeric)
-
-    # FIXME
-    self / other
   end
 
   #
