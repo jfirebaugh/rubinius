@@ -240,6 +240,8 @@ namespace rubinius {
   }
 
   Object* Fixnum::pow(STATE, Float* exponent) {
+    if(exponent->val == 0.0) return Float::create(state, 1.0);
+    if(to_native() == 0 && !(exponent->val < 0)) return Float::create(state, 0.0);
     return this->to_f(state)->fpow(state, exponent);
   }
 
