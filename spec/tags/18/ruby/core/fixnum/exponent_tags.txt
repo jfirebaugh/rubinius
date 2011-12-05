@@ -1,1 +1,11 @@
 unstable(attempts to calculate huge Bignums):Fixnum#** when the exponent is a positive Fixnum returns +/-Infinity when exponent is too big
+fails:Fixnum#** when the exponent is a negative Bignum returns Infinity when self is 0
+fails:Fixnum#** when the exponent is a negative Bignum returns 1.0 when self is 1
+fails:Fixnum#** when the exponent is a negative Bignum returns 1.0 when self is -1 and the exponent is even
+fails:Fixnum#** when the exponent is a negative Bignum returns 1.0 when self is -1 and the exponent is odd
+fails:Fixnum#** when the exponent is a negative Bignum returns 0.0 when self is > 1 or < -1
+fails:Fixnum#** when the exponent is a positive Float returns a Complex when self is negative
+fails:Fixnum#** when the exponent is a negative Float returns a Complex when self is negative
+fails:Fixnum#** when the exponent is NaN returns Complex(NaN, NaN) when self is < -1
+fails:Fixnum#** when the exponent is any other type coerces the argument
+fails:Fixnum#** when the exponent is any other type raises a TypeError if the exponent can't be coerced
