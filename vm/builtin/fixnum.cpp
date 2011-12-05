@@ -191,6 +191,7 @@ namespace rubinius {
     }
 
     if(exp < 0) {
+      if(base == -1) return Fixnum::from(exp % 2 == 0 ? 1 : -1);
       return this->to_f(state)->fpow(state, exponent);
     }
 
