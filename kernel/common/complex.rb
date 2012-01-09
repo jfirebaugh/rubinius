@@ -344,9 +344,27 @@ class Complex < Numeric
     real.rationalize(eps)
   end
 
-  #
-  # Standard string representation of the complex number.
-  #
+  def inspect
+    result = "("
+    result << real.inspect
+
+    if imag.kind_of?(Float) ? !imag.nan? && FFI::Platform::Math.signbit(imag) != 0 : imag < 0
+      result << "-"
+    else
+      result << "+"
+    end
+
+    imag_s = imag.abs.inspect
+    result << imag_s
+
+    unless imag_s[-1] =~ /\d/
+      result << "*"
+    end
+
+    result << "i)"
+    result
+  end
+
   def to_s
     result = real.to_s
 
@@ -372,13 +390,6 @@ class Complex < Numeric
   #
   def hash
     @real.hash ^ @imag.hash
-  end
-
-  #
-  # Returns "<tt>Complex(<i>real</i>, <i>imag</i>)</tt>".
-  #
-  def inspect
-    "(#{to_s})"
   end
 
   #
