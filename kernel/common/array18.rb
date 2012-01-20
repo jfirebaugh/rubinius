@@ -313,12 +313,12 @@ class Array
   # the Array to strings, inserting a separator between
   # each. The separator defaults to $,. Detects recursive
   # Arrays.
-  def join(sep=nil)
+  def join(sep=$,)
     return "" if @total == 0
 
     out = ""
     return "[...]" if Thread.detect_recursion self do
-      sep = sep ? StringValue(sep) : $,
+      sep = StringValue(sep) unless sep.nil?
 
       # We've manually unwound the first loop entry for performance
       # reasons.
@@ -338,7 +338,7 @@ class Array
       i = @start + 1
 
       while i < total
-        out << sep
+        out << sep unless sep.nil?
 
         x = @tuple[i]
 
