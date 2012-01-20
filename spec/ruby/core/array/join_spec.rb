@@ -6,8 +6,19 @@ describe "Array#join" do
   it_behaves_like :array_join_with_string_separator,  :join
   it_behaves_like :array_join_with_default_separator, :join
 
-  it "does not separate elements when the passed separator is nil" do
-    [1, 2, 3].join(nil).should == '123'
+  ruby_bug "#5915", "2.0" do
+    before :each do
+      @separator = $,
+    end
+
+    after :each do
+      $, = @separator
+    end
+
+    it "does not separate elements with $, when passed nil" do
+      $, = ","
+      [1, 2, 3].join(nil).should == '123'
+    end
   end
 
   it "calls #to_str to convert the separator to a String" do
